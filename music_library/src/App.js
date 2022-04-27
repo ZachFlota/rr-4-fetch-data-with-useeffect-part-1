@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Gallery from './Components/Gallery'
 import SearchBar from './Components/SearchBar'
+import AlbumView from './Components/AlbumView'
+import ArtistView from './Components/ArtistView'
 
 function App(){
     let [search, setSearch] = useState('')
@@ -32,12 +35,23 @@ function App(){
     }
 
     return (
-        <div>
-            <SearchBar handleSearch = {handleSearch} />
-            {message}
-            <Gallery data={data} />
-        </div>
+      <div>
+      {message}
+          <Router>
+              <Routes>
+                  <Route path="/" element={
+                      <>
+                          <SearchBar handleSearch = {handleSearch}/>
+                          <Gallery data={data} />
+                      </>
+                  } />
+                  <Route path="/album/:id" element={<AlbumView />} />
+                  <Route path="/artist/:id" element={<ArtistView />} />
+              </Routes>
+          </Router>
+      </div>
     )
+  
 }
 
 export default App
